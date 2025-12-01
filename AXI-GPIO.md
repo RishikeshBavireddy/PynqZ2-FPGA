@@ -55,3 +55,50 @@ Vivado provides **All Inputs** and **All Outputs** checkboxes for each channel:
 1. Zynq PS ↔ AXI Interconnect ↔ AXI GPIO  
 2. AXI GPIO ↔ FPGA pins or custom logic  
 3. ARM processor accesses GPIO through AXI4-Lite registers for reading/writing pins
+
+# **What is Create HDL Wrapper in Vivado?**
+
+A Block Design (`.bd`) cannot be synthesized directly. Vivado needs a top-level HDL file that **instantiates** the BD.  
+**Create HDL Wrapper** generates this top-level module automatically.
+
+---
+
+# **1. Purpose of the HDL Wrapper**
+
+- Acts as the **top module** for synthesis/implementation  
+- Instantiates the block design inside a Verilog/VHDL file  
+- Exposes BD ports as top-level ports for XDC pin assignment  
+- Required for exporting hardware to Vitis/SDK (`.xsa`/`.hdf`)
+
+---
+
+# **2. When to Use It**
+
+- Anytime you use IP Integrator / Block Design (Zynq PS, AXI GPIO, custom IP)  
+- Before running synthesis or implementation  
+- Before generating output products or exporting hardware  
+- When you want Vivado to auto-manage top-level connections
+
+---
+
+# **3. Wrapper Options**
+
+### **(a) Let Vivado Manage Wrapper**
+- Auto-regenerated when BD changes  
+- Recommended for most designs
+
+### **(b) Copy and Allow User Edits**
+- Used when adding custom logic around the BD  
+- You manually maintain the wrapper
+
+---
+
+# **4. What the Wrapper Contains**
+
+A simple HDL module like:
+
+```verilog
+module design_1_wrapper(...);
+  design_1 design_1_i (...);
+endmodule
+   
