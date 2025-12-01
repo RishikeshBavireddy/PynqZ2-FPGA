@@ -32,15 +32,8 @@ AXI GPIO has 3 main parts:
 
 ---
 
-# **2. AXI GPIO in Vivado (Your Screenshot Context)**
+# **2. AXI GPIO in Vivado **
 
-Vivado shows two interfaces:
-- **GPIO** → Channel 1  
-- **GPIO2** → Channel 2  
-
-If **Board Interface = Custom**, it means:
-- Vivado does not auto-connect the GPIO pins to board connectors
-- User must manually connect them to FPGA pins, LEDs, buttons, PMODs, or internal logic
 
 ---
 
@@ -50,15 +43,3 @@ Typical connections:
 1. Zynq PS → AXI Interconnect → AXI GPIO  
 2. AXI GPIO → FPGA pins or custom HDL  
 3. ARM CPU reads/writes the GPIO over AXI4-Lite registers  
-
-Example C code:
-
-```c
-XGpio gpio;
-XGpio_Initialize(&gpio, XPAR_AXI_GPIO_0_DEVICE_ID);
-
-// Channel 1 as output
-XGpio_SetDataDirection(&gpio, 1, 0x00);
-
-// Write value to output
-XGpio_DiscreteWrite(&gpio, 1, 0x01);
